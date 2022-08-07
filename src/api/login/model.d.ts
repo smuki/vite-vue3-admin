@@ -1,15 +1,13 @@
 declare namespace API {
   /** 登录参数 */
   type LoginParams = {
-    captchaId: string;
-    password: string;
-    username: string;
-    verifyCode: string;
+    sHash: string;
+    sUserId: string;
   };
 
   /** 登录成功结果 */
   type LoginResult = {
-    token: string;
+    Token: string;
   };
 
   /** 获取验证码参数 */

@@ -6,9 +6,10 @@ import { request, BaseResponse } from '@/utils/request';
  * @returns
  */
 export function login(data: API.LoginParams) {
+  console.log(data);
   return request<BaseResponse<API.LoginResult>>(
     {
-      url: 'login',
+      url: 'ADM01001C',
       method: 'post',
       data,
     },

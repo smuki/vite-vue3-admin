@@ -123,11 +123,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // https: true,
       port: 8088,
       proxy: {
-        '/api': {
-          target: 'https://nest-api.buqiyuan.site/api/',
+        '/report': {
+          //target: 'https://nest-api.buqiyuan.site/api/',
+          target: 'http://kaqa.dev.ekuaibao.com.cn/report/',
           // target: 'http://localhost:7001',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/report/, ''),
         },
         '/ws-api': {
           target: 'wss://nest-api.buqiyuan.site',

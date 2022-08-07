@@ -7,13 +7,13 @@
     </div>
     <a-form layout="horizontal" :model="state.formInline" @submit.prevent="handleSubmit">
       <a-form-item>
-        <a-input v-model:value="state.formInline.username" size="large" placeholder="rootadmin">
+        <a-input v-model:value="state.formInline.sUserId" size="large" placeholder="rootadmin">
           <template #prefix><user-outlined type="user" /></template>
         </a-input>
       </a-form-item>
       <a-form-item>
         <a-input
-          v-model:value="state.formInline.password"
+          v-model:value="state.formInline.sHash"
           size="large"
           type="password"
           placeholder="123456"
@@ -22,7 +22,7 @@
           <template #prefix><lock-outlined type="user" /></template>
         </a-input>
       </a-form-item>
-      <a-form-item>
+      <a-form-item v-if="false">
         <a-input
           v-model:value="state.formInline.verifyCode"
           placeholder="验证码"
@@ -30,7 +30,7 @@
           size="large"
         >
           <template #prefix><SafetyOutlined /></template>
-          <template #suffix>
+          <template v-if="false" #suffix>
             <img
               :src="state.captcha"
               class="absolute right-0 h-full cursor-pointer"
@@ -61,10 +61,8 @@
     loading: false,
     captcha: '',
     formInline: {
-      username: '',
-      password: '',
-      verifyCode: '',
-      captchaId: '',
+      sUserId: '',
+      sHash: '',
     },
   });
 
@@ -74,32 +72,33 @@
   const userStore = useUserStore();
 
   const setCaptcha = async () => {
-    const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
-    state.captcha = img;
-    state.formInline.captchaId = id;
+    //const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
+    //state.captcha = img;
+    //state.formInline.captchaId = id;
   };
-  setCaptcha();
+  //setCaptcha();
 
   const handleSubmit = async () => {
-    const { username, password, verifyCode } = state.formInline;
-    if (username.trim() == '' || password.trim() == '') {
+    const { sUserId, sHash } = state.formInline;
+    if (sUserId.trim() == '' || sHash.trim() == '') {
       return message.warning('用户名或密码不能为空！');
     }
-    if (!verifyCode) {
-      return message.warning('请输入验证码！');
-    }
+    //if (!verifyCode) {
+      //return message.warning('请输入验证码！');
+    //}
     message.loading('登录中...', 0);
     state.loading = true;
     console.log(state.formInline);
-    // params.password = md5(password)
+    // params.sHash = md5(sHash)
 
     const [err] = await to(userStore.login(state.formInline));
+    console.log(err);
     if (err) {
       Modal.error({
         title: () => '提示',
         content: () => err.message,
       });
-      setCaptcha();
+      //setCaptcha();
     } else {
       message.success('登录成功！');
       setTimeout(() => router.replace((route.query.redirect as string) ?? '/'));
