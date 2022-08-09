@@ -1,6 +1,6 @@
 import { type RouteRecordRaw } from 'vue-router';
 import { defineStore } from 'pinia';
-import { useWsStore } from './ws';
+//import { useWsStore } from './ws';
 import { store } from '@/store';
 import { login } from '@/api/login';
 import { ACCESS_TOKEN_KEY } from '@/enums/cacheEnum';
@@ -76,7 +76,7 @@ export const useUserStore = defineStore({
     /** 登录成功之后, 获取用户信息以及生成权限路由 */
     async afterLogin(userInfo) {
       try {
-        const wsStore = useWsStore();
+        //const wsStore = useWsStore();
         //const [userInfo, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
         const menus = [];
         const perms = [];
@@ -95,7 +95,7 @@ export const useUserStore = defineStore({
         console.log(generatorResult);
 
         this.menus = generatorResult.menus.filter((item) => !item.meta?.hideInMenu);
-        !wsStore.client && wsStore.initSocket();
+        //!wsStore.client && wsStore.initSocket();
 
         console.log(menus);
         console.log(perms);
@@ -109,8 +109,8 @@ export const useUserStore = defineStore({
     /** 登出 */
     async logout() {
       await logout();
-      const wsStore = useWsStore();
-      wsStore.closeSocket();
+      //const wsStore = useWsStore();
+      //wsStore.closeSocket();
       this.resetToken();
       resetRouter();
     },

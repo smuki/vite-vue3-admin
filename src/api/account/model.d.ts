@@ -28,9 +28,7 @@ declare namespace API {
     sDefaultLang: string;
     sCorporation: string;
     sAvatarUrl: string;
-    status: number;
     sRole: string[];
-    departmentName: string;
   };
 
   type AdminUserInfo = {

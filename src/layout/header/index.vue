@@ -35,9 +35,9 @@
         <LockOutlined @click="lockscreenStore.setLock(true)" />
       </Tooltip>
       <FullScreen v-if="false" />
-      <LocalePicker />
+      <LocalePicker v-if="false" />
       <Dropdown placement="bottomRight">
-        <Avatar :src="userInfo.headImg" :alt="userInfo.name">{{ userInfo.sUserName }}</Avatar>
+        <Avatar :src="userInfo.headImg" :alt="userInfo.sUserName">{{ userInfo.sUserName }}</Avatar>
         <template #overlay>
           <Menu>
             <Menu.Item @click="$router.push({ name: 'account-about' })">

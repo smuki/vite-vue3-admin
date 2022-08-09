@@ -26,11 +26,11 @@ export function createRouterGuards(router: Router, whiteNameList: WhiteNameList)
         const hasRoute = router.hasRoute(to.name!);
         if (userStore.menus.length === 0) {
           // 从后台获取菜单
-          const [err] = await _to(userStore.afterLogin());
-          if (err) {
-            userStore.resetToken();
-            return next({ name: LOGIN_NAME });
-          }
+          //const [err] = await _to(userStore.afterLogin());
+          //if (err) {
+          // userStore.resetToken();
+          // return next({ name: LOGIN_NAME });
+          //}
           if (!hasRoute) {
             // 请求带有 redirect 重定向时，登录自动重定向到该地址
             const redirect = decodeURIComponent((from.query.redirect || '') as string);

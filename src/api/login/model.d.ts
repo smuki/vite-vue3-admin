@@ -7,7 +7,8 @@ declare namespace API {
 
   /** 登录成功结果 */
   type LoginResult = {
-    Token: string;
+    token: string;
+    entity: UserMst;
   };
 
   /** 获取验证码参数 */
