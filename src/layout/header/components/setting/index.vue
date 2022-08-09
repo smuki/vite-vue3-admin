@@ -41,7 +41,7 @@
         </div>
       </Descriptions.Item>
     </Descriptions>
-    <Descriptions title="导航模式" :column="5">
+    <Descriptions v-if="false" title="导航模式" :column="5">
       <Descriptions.Item v-for="item in layouts" :key="item.value">
         <div
           class="style-checbox-item"
