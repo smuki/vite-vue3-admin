@@ -21,6 +21,18 @@ declare namespace API {
     perms: string[];
   };
 
+  type UserMst = {
+    sUserId: string;
+    sUserName: string;
+    sHash: string;
+    sDefaultLang: string;
+    sCorporation: string;
+    sAvatarUrl: string;
+    status: number;
+    sRole: string[];
+    departmentName: string;
+  };
+
   type AdminUserInfo = {
     createTime: Date;
     updateTime: Date;

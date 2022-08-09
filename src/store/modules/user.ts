@@ -5,7 +5,7 @@ import { store } from '@/store';
 import { login } from '@/api/login';
 import { ACCESS_TOKEN_KEY } from '@/enums/cacheEnum';
 import { Storage } from '@/utils/Storage';
-import { logout, getInfo, permmenu } from '@/api/account';
+import { logout /*, getInfo, permmenu */ } from '@/api/account';
 import { generatorDynamicRouter } from '@/router/generator-router';
 import { resetRouter } from '@/router';
 
@@ -61,8 +61,10 @@ export const useUserStore = defineStore({
     /** 登录 */
     async login(params: API.LoginParams) {
       try {
-        const  data  = await login(params);
+        const data = await login(params);
+        console.log('data');
         console.log(data);
+        console.log('data.Token');
         console.log(data.Token);
         this.setToken(data.Token);
         return this.afterLogin();
@@ -74,15 +76,29 @@ export const useUserStore = defineStore({
     async afterLogin() {
       try {
         const wsStore = useWsStore();
-        const [userInfo, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
-        this.perms = perms;
-        this.name = userInfo.name;
-        this.avatar = userInfo.headImg;
-        this.userInfo = userInfo;
+        //const [userInfo, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
+        const menus = [];
+        const perms = [];
+        this.name = '';
+        this.avatar = '';
+        const userInfo = {};
         // 生成路由
         const generatorResult = await generatorDynamicRouter(menus);
+
+        console.log('-generatorResult------------------------------------');
+        console.log('-generatorResult------------------------------------');
+        console.log('-generatorResult------------------------------------');
+        console.log('-generatorResult------------------------------------');
+        console.log('-generatorResult------------------------------------');
+        console.log('-generatorResult------------------------------------');
+
+        console.log(generatorResult);
+
         this.menus = generatorResult.menus.filter((item) => !item.meta?.hideInMenu);
         !wsStore.client && wsStore.initSocket();
+
+        console.log(menus);
+        console.log(perms);
 
         return { menus, perms, userInfo };
       } catch (error) {

@@ -30,11 +30,11 @@
       </slot>
     </Space>
     <Space :size="20">
-      <Search />
-      <Tooltip :title="$t('layout.header.tooltipLock')" placement="bottom">
+      <Search v-if="false" />
+      <Tooltip v-if="false" :title="$t('layout.header.tooltipLock')" placement="bottom">
         <LockOutlined @click="lockscreenStore.setLock(true)" />
       </Tooltip>
-      <FullScreen />
+      <FullScreen v-if="false" />
       <LocalePicker />
       <Dropdown placement="bottomRight">
         <Avatar :src="userInfo.headImg" :alt="userInfo.name">{{ userInfo.name }}</Avatar>

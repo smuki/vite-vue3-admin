@@ -52,7 +52,7 @@ service.interceptors.response.use(
       $message.error(res.message || UNKNOWN_ERROR);
 
       // Illegal token
-      if (res.code === 11001 || res.code === 11002) {
+      if (res.sCode === '11001' || res.sCode === '11002') {
         window.localStorage.clear();
         window.location.reload();
         // to re-login

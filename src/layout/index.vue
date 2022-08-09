@@ -22,7 +22,7 @@
       <Layout.Content class="layout-content">
         <tabs-view />
       </Layout.Content>
-      <PageFooter />
+      <PageFooter v-if="false" />
     </Layout>
   </Layout>
 </template>

@@ -54,7 +54,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import { message, Modal } from 'ant-design-vue';
   import { useUserStore } from '@/store/modules/user';
-  import { getImageCaptcha } from '@/api/login';
+  //import { getImageCaptcha } from '@/api/login';
   import { to } from '@/utils/awaitTo';
 
   const state = reactive({
@@ -84,12 +84,16 @@
       return message.warning('用户名或密码不能为空！');
     }
     //if (!verifyCode) {
-      //return message.warning('请输入验证码！');
+    //return message.warning('请输入验证码！');
     //}
     message.loading('登录中...', 0);
     state.loading = true;
     console.log(state.formInline);
     // params.sHash = md5(sHash)
+
+    console.log('-----------------------------------------');
+
+    console.log(await to(userStore.login(state.formInline)));
 
     const [err] = await to(userStore.login(state.formInline));
     console.log(err);
