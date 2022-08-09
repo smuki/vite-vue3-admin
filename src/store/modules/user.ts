@@ -16,7 +16,7 @@ interface UserState {
   // like [ 'sys:user:add', 'sys:user:update' ]
   perms: string[];
   menus: RouteRecordRaw[];
-  userInfo: Partial<API.AdminUserInfo>;
+  userInfo: Partial<API.UserMst>;
 }
 
 export const useUserStore = defineStore({
@@ -61,19 +61,20 @@ export const useUserStore = defineStore({
     /** 登录 */
     async login(params: API.LoginParams) {
       try {
-        const data = await login(params);
+        const { Token, entity } = await login(params);
         console.log('data');
-        console.log(data);
+        console.log(Token);
+        console.log(entity);
         console.log('data.Token');
-        console.log(data.Token);
-        this.setToken(data.Token);
-        return this.afterLogin();
+        console.log(Token);
+        this.setToken(Token);
+        return this.afterLogin(entity);
       } catch (error) {
         return Promise.reject(error);
       }
     },
     /** 登录成功之后, 获取用户信息以及生成权限路由 */
-    async afterLogin() {
+    async afterLogin(userInfo) {
       try {
         const wsStore = useWsStore();
         //const [userInfo, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
@@ -81,7 +82,6 @@ export const useUserStore = defineStore({
         const perms = [];
         this.name = '';
         this.avatar = '';
-        const userInfo = {};
         // 生成路由
         const generatorResult = await generatorDynamicRouter(menus);
 
