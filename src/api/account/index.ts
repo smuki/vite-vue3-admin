@@ -24,10 +24,15 @@ export function getInfo() {
 }
 
 export function permmenu() {
-  return request<API.PermMenu>({
-    url: 'ADM04017B',
-    method: 'post',
-  });
+  return request<BaseResponse<API.PermMenu>>(
+    {
+      url: 'ADM04017B',
+      method: 'post',
+    },
+    {
+      isGetDataDirectly: false,
+    },
+  );
 }
 
 export function logout() {

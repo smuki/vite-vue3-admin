@@ -3,11 +3,11 @@
     <div class="login-logo">
       <!-- <svg-icon name="logo" :size="45" /> -->
       <img src="~@/assets/images/logo.png" width="45" />
-      <h1 class="mb-0 ml-2 text-3xl font-bold">Antd Admin</h1>
+      <h1 class="mb-0 ml-2 text-3xl font-bold">集成中台</h1>
     </div>
     <a-form layout="horizontal" :model="state.formInline" @submit.prevent="handleSubmit">
       <a-form-item>
-        <a-input v-model:value="state.formInline.sUserId" size="large" placeholder="rootadmin">
+        <a-input v-model:value="state.formInline.sUserId" size="large" placeholder="请输入账户">
           <template #prefix><user-outlined type="user" /></template>
         </a-input>
       </a-form-item>
@@ -16,7 +16,7 @@
           v-model:value="state.formInline.sHash"
           size="large"
           type="password"
-          placeholder="123456"
+          placeholder="请输入密码"
           autocomplete="new-password"
         >
           <template #prefix><lock-outlined type="user" /></template>
@@ -96,15 +96,20 @@
     console.log(await to(userStore.login(state.formInline)));
 
     const [err] = await to(userStore.login(state.formInline));
-    console.log(err);
+    //console.log(err);
     if (err) {
+      message.success('111111111！');
       Modal.error({
         title: () => '提示',
         content: () => err.message,
       });
       //setCaptcha();
     } else {
+      message.success('222222222！');
       message.success('登录成功！');
+
+      console.log(router);
+
       setTimeout(() => router.replace((route.query.redirect as string) ?? '/'));
     }
     state.loading = false;

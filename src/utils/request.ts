@@ -73,9 +73,7 @@ service.interceptors.response.use(
       error.code = res.sCode;
       return Promise.reject(error);
     } else {
-      console.log(res);
-
-      return response;
+      return res;
     }
   },
   (error) => {

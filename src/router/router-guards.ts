@@ -18,6 +18,18 @@ export function createRouterGuards(router: Router, whiteNameList: WhiteNameList)
     NProgress.start(); // start progress bar
     const token = Storage.get(ACCESS_TOKEN_KEY, null);
 
+    console.log('from------>');
+    console.log(from);
+
+    console.log('to----->');
+    console.log(to);
+
+    console.log('LOGIN_NAME');
+    console.log(LOGIN_NAME);
+
+    console.log('defaultRoutePath');
+    console.log(defaultRoutePath);
+
     if (token) {
       if (to.name === LOGIN_NAME) {
         next({ path: defaultRoutePath });
@@ -72,6 +84,10 @@ export function createRouterGuards(router: Router, whiteNameList: WhiteNameList)
     const token = Storage.get(ACCESS_TOKEN_KEY, null);
 
     if (isNavigationFailure(failure)) {
+      console.debug(to);
+      console.debug(from);
+
+      console.error('1--------failed navigation', failure);
       console.error('failed navigation', failure);
     }
     // 在这里设置需要缓存的组件名称

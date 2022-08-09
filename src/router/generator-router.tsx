@@ -51,7 +51,7 @@ export function filterAsyncRoute(
           title: sName,
           type: item.nType,
           perms: [],
-          icon: sIcon,
+          sIcon,
           namePath: lastNamePath.concat(fullPath),
           keepAlive: bKeepAlive,
         },

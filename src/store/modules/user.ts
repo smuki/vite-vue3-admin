@@ -61,7 +61,15 @@ export const useUserStore = defineStore({
     /** 登录 */
     async login(params: API.LoginParams) {
       try {
+        console.log('###############await login(params)......');
+
+        const xxx = await login(params);
+
+        console.log(xxx);
+
         const { Token, entity } = await login(params);
+        //console.log(ttt);
+        //const { Token, entity } = await login(params);
         console.log('data');
         console.log(Token);
         console.log(entity);
@@ -90,6 +98,7 @@ export const useUserStore = defineStore({
 
         this.name = '';
         this.avatar = '';
+        //const perms = [];
         // 生成路由
         const generatorResult = await generatorDynamicRouter(menus);
 

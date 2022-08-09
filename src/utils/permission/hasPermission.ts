@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import router from '@/router';
+//import router from '@/router';
 
 /**
  * 第一种权限验证形式
@@ -10,29 +10,29 @@ import router from '@/router';
  * @param {string} action
  * @param {boolean} include
  */
-export const hasPermission = (action: string) => {
-  const currentRoute = router.currentRoute.value;
+//export const hasPermission = (action: string) => {
+//const currentRoute = router.currentRoute.value;
 
-  // 下面只是为了方便演示，不建议这么做
-  action = `${currentRoute.path
-    .split('/')
-    .filter((m) => m.trim() != '')
-    .join('.')}.${action}`;
-  // console.log(action, currentRoute.meta.permission, '当前路由权限')
-  // @ts-ignore
-  return currentRoute.meta?.permission?.includes(action);
-
-  // const permissions = currentRoute.meta.permission || []
-  // if (include) {
-  //     return permissions.some(item => item.action.includes(action))
-  // } else {
-  //     return permissions.some(item => item.action == action)
-  // }
-};
+// 下面只是为了方便演示，不建议这么做
+// action = `${currentRoute.path
+//  .split('/')
+//  .filter((m) => m.trim() != '')
+//  .join('.')}.${action}`;
+// console.log(action, currentRoute.meta.permission, '当前路由权限')
+// @ts-ignore
+// return currentRoute.meta?.permission?.includes(action);
+// return true;
+// const permissions = currentRoute.meta.permission || []
+// if (include) {
+//     return permissions.some(item => item.action.includes(action))
+// } else {
+//     return permissions.some(item => item.action == action)
+// }
+//};
 
 // 暴露一个插件 API
 const install = (app: App) => {
   // 在 this 上挂载一个贯穿方法，用 provider 也行
-  app.config.globalProperties.$hasPermission = hasPermission;
+  app.config.globalProperties.$hasPermission = true;
 };
 export default install;
