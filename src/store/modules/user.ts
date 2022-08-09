@@ -5,7 +5,7 @@ import { store } from '@/store';
 import { login } from '@/api/login';
 import { ACCESS_TOKEN_KEY } from '@/enums/cacheEnum';
 import { Storage } from '@/utils/Storage';
-import { logout /*, getInfo, permmenu */ } from '@/api/account';
+import { logout /*, getInfo, permmenu */, permmenu } from '@/api/account';
 import { generatorDynamicRouter } from '@/router/generator-router';
 import { resetRouter } from '@/router';
 
@@ -76,10 +76,18 @@ export const useUserStore = defineStore({
     /** 登录成功之后, 获取用户信息以及生成权限路由 */
     async afterLogin(userInfo) {
       try {
-        //const wsStore = useWsStore();
-        //const [userInfo, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
-        const menus = [];
-        const perms = [];
+        const { menus, perms } = await permmenu();
+
+        console.log(typeof menus);
+        console.log('-1generatorResult------------------------------------');
+        console.log('-2generatorResult------------------------------------');
+        console.log('-3generatorResult------------------------------------');
+        console.log('-4generatorResult------------------------------------');
+        console.log('-5generatorResult------------------------------------');
+        console.log('-6generatorResult------------------------------------');
+        console.log('-7generatorResult------------------------------------');
+        console.log(menus);
+
         this.name = '';
         this.avatar = '';
         // 生成路由

@@ -1,4 +1,19 @@
 declare namespace API {
+  type SysMenus = {
+    sKey: string;
+    sParent: string;
+    sName: string;
+    sRouter: string;
+    perms: string;
+    /** 当前菜单类型 0: 目录 | 1: 菜单 | 2: 权限 */
+    nType: 0 | 1 | 2;
+    sIcon: string;
+    nSequency: number;
+    sPath: string;
+    bKeepAlive: boolean;
+    bHidden: boolean;
+  };
+
   type Menu = {
     createTime: Date;
     updateTime: Date;
@@ -17,7 +32,7 @@ declare namespace API {
   };
 
   type PermMenu = {
-    menus: Menu[];
+    menus: SysMenus[];
     perms: string[];
   };
 

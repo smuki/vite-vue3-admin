@@ -16,29 +16,29 @@ import NotFound from '@/views/error/404.vue';
 const endRoutes: RouteRecordRaw[] = [REDIRECT_ROUTE, errorRoute, notFound];
 
 export function filterAsyncRoute(
-  routes: API.Menu[],
-  parentRoute: API.Menu | null = null,
+  routes: API.SysMenus[],
+  parentRoute: API.SysMenus | null = null,
   lastNamePath: string[] = [],
 ): RouteRecordRaw[] {
   return routes
-    .filter((item) => item.type !== 2 && item.isShow && item.parentId == parentRoute?.id)
+    .filter((item) => item.nType !== 1 && !item.bHidden && item.sParent == parentRoute?.sKey)
     .map((item) => {
-      const { router, viewPath, name, icon, orderNum, keepalive } = item;
+      const { sRouter, sPath, sName, sIcon, nSequency, bKeepAlive } = item;
       let fullPath = '';
       const pathPrefix = lastNamePath.at(-1) || '';
-      if (isUrl(router)) {
-        fullPath = router;
+      if (isUrl(sRouter)) {
+        fullPath = sRouter;
       } else {
-        fullPath = router.startsWith('/') ? router : `/${router}`;
-        fullPath = router.startsWith(pathPrefix) ? fullPath : pathPrefix + fullPath;
+        fullPath = sRouter.startsWith('/') ? sRouter : `/${sRouter}`;
+        fullPath = sRouter.startsWith(pathPrefix) ? fullPath : pathPrefix + fullPath;
         fullPath = [...new Set(uniqueSlash(fullPath).split('/'))].join('/');
       }
-      let realRoutePath = router;
+      let realRoutePath = sRouter;
       if (parentRoute) {
-        if (fullPath.startsWith(parentRoute?.router)) {
-          realRoutePath = fullPath.split(parentRoute.router)[1];
-        } else if (!isUrl(parentRoute.router) && !isUrl(router)) {
-          realRoutePath = router;
+        if (fullPath.startsWith(parentRoute?.sRouter)) {
+          realRoutePath = fullPath.split(parentRoute.sRouter)[1];
+        } else if (!isUrl(parentRoute.sRouter) && !isUrl(sRouter)) {
+          realRoutePath = sRouter;
         }
       }
       realRoutePath = realRoutePath.startsWith('/') ? realRoutePath.slice(1) : realRoutePath;
@@ -47,18 +47,18 @@ export function filterAsyncRoute(
         // name: `${viewPath ? toHump(viewPath) : fullPath}-${item.id}`,
         name: fullPath,
         meta: {
-          orderNum,
-          title: name,
-          type: item.type,
+          orderNum: nSequency,
+          title: sName,
+          type: item.nType,
           perms: [],
-          icon,
+          icon: sIcon,
           namePath: lastNamePath.concat(fullPath),
-          keepAlive: keepalive,
+          keepAlive: bKeepAlive,
         },
       };
 
       // 如果是目录
-      if (item.type === 0) {
+      if (item.nType === 0) {
         const children = filterAsyncRoute(routes, item, lastNamePath.concat(fullPath));
         if (children?.length) {
           route.component = RouterView;
@@ -75,12 +75,12 @@ export function filterAsyncRoute(
         }
         return route;
         // 如果是页面
-      } else if (item.type === 1) {
-        const Component = constantRouterComponents[viewPath] || NotFound;
+      } else if (item.nType === 1) {
+        const Component = constantRouterComponents[sPath] || NotFound;
         route.component = Component;
 
         const perms = routes
-          .filter((n) => n.parentId === item.id)
+          .filter((n) => n.sParent === item.sKey)
           .flatMap((n) => n.perms?.split(','));
         if (route.meta && perms) {
           // 设置当前页面所拥有的权限
@@ -98,7 +98,7 @@ export function filterAsyncRoute(
  * @param token
  * @returns {Promise<Router>}
  */
-export const generatorDynamicRouter = (asyncMenus: API.Menu[]) => {
+export const generatorDynamicRouter = (asyncMenus: API.SysMenus[]) => {
   try {
     // console.log('asyncMenus', asyncMenus);
     const routeList = filterAsyncRoute(asyncMenus);

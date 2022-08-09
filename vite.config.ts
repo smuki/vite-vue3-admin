@@ -125,7 +125,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       proxy: {
         '/report': {
           //target: 'https://nest-api.buqiyuan.site/api/',
-          target: 'http://kaqa.dev.ekuaibao.com.cn/report/',
+          target: 'http://invoice.dev.ekuaibao.com.cn/report/',
           // target: 'http://localhost:7001',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/report/, ''),

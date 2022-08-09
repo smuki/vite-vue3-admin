@@ -75,7 +75,7 @@ service.interceptors.response.use(
     } else {
       console.log(res);
 
-      return response.data;
+      return response;
     }
   },
   (error) => {

@@ -25,8 +25,8 @@ export function getInfo() {
 
 export function permmenu() {
   return request<API.PermMenu>({
-    url: 'ADM04017A',
-    method: 'get',
+    url: 'ADM04017B',
+    method: 'post',
   });
 }
 
