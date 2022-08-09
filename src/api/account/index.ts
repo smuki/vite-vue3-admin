@@ -25,14 +25,14 @@ export function getInfo() {
 
 export function permmenu() {
   return request<API.PermMenu>({
-    url: 'account/permmenu',
+    url: 'ADM04017A',
     method: 'get',
   });
 }
 
 export function logout() {
   return request({
-    url: 'account/logout',
+    url: 'ADM01001C/logout',
     method: 'post',
   });
 }
