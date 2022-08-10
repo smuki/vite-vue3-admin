@@ -1,3 +1,4 @@
+import { debounce } from 'lodash-es';
 import { Tag } from 'ant-design-vue';
 import type { TableColumn } from '@/components/core/dynamic-table';
 
@@ -12,6 +13,24 @@ export const tableData = Array.from({ length: 30 }).map((_, i) => ({
   gender: ~~(Math.random() * 2),
   status: ~~(Math.random() * 2),
 }));
+
+const fetchStatusMapData = (keyword = '') => {
+  return new Promise<LabelValueOptions>((resolve) => {
+    setTimeout(() => {
+      const data = [
+        {
+          label: '已售罄',
+          value: 0,
+        },
+        {
+          label: '热卖中',
+          value: 1,
+        },
+      ].filter((n) => n.label.includes(keyword));
+      resolve(data);
+    }, 3000);
+  });
+};
 
 const getClothesByGender = (gender: number) => {
   if (gender === 1) {
@@ -111,25 +130,28 @@ export const columns: TableColumn<ListItemType>[] = [
     dataIndex: 'status',
     formItemProps: {
       component: 'Select',
-      componentProps: {
+      componentProps: ({ formInstance, schema }) => ({
+        showSearch: true,
+        filterOption: false,
+        labelInValue: true,
         request: () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              const data = [
-                {
-                  label: '已售罄',
-                  value: 0,
-                },
-                {
-                  label: '热卖中',
-                  value: 1,
-                },
-              ];
-              resolve(data);
-            }, 3000);
-          });
+          return fetchStatusMapData();
         },
-      },
+        onSearch: debounce(async (keyword) => {
+          schema.loading = true;
+          const newSchema = {
+            field: 'status',
+            componentProps: {
+              options: [] as LabelValueOptions,
+            },
+          };
+          formInstance?.updateSchema([newSchema]);
+          console.log('onSearch keyword', keyword);
+          const result = await fetchStatusMapData(keyword).finally(() => (schema.loading = false));
+          newSchema.componentProps.options = result;
+          formInstance?.updateSchema([newSchema]);
+        }),
+      }),
     },
     bodyCell: ({ record }) => (
       <Tag color={record.status == 1 ? 'red' : 'default'}>

@@ -26,6 +26,7 @@ export function useFormEvents(formActionContext: UseFormActionContext) {
     getFormProps,
     schemaFormRef,
     defaultFormValues,
+    originComponentPropsFnMap,
     handleFormValues,
   } = formActionContext;
 
@@ -177,6 +178,17 @@ export function useFormEvents(formActionContext: UseFormActionContext) {
       unref(formSchemasRef).forEach((val) => {
         if (val.field === item.field) {
           const newSchema = deepMerge(val, item);
+          if (originComponentPropsFnMap.has(val.field)) {
+            const originCompPropsFn = originComponentPropsFnMap.get(val.field)!;
+            const compProps = { ...newSchema.componentProps };
+            newSchema.componentProps = (opt) => {
+              const res = {
+                ...originCompPropsFn(opt),
+                ...compProps,
+              };
+              return res;
+            };
+          }
           schemas.push(newSchema);
         } else {
           schemas.push(val);

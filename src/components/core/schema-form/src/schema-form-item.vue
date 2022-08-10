@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, unref, toRefs, isVNode } from 'vue';
+  import { computed, unref, toRefs, isVNode, onActivated } from 'vue';
   import { useVModel, isFunction } from '@vueuse/core';
   import { cloneDeep } from 'lodash-es';
   import { Form, Col, Spin, Divider } from 'ant-design-vue';
@@ -378,7 +378,7 @@
     return rules;
   });
 
-  requestIdleCallback(async () => {
+  const fetchRemoteData = async () => {
     if (getComponentProps.value?.request) {
       const { componentProps, component } = unref(schema);
 
@@ -399,5 +399,8 @@
         schema.value.loading = false;
       }
     }
-  });
+  };
+
+  requestAnimationFrame(fetchRemoteData);
+  onActivated(fetchRemoteData);
 </script>
