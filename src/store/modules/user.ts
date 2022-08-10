@@ -5,7 +5,7 @@ import { store } from '@/store';
 import { login } from '@/api/login';
 import { ACCESS_TOKEN_KEY } from '@/enums/cacheEnum';
 import { Storage } from '@/utils/Storage';
-import { logout /*, getInfo, permmenu */, permmenu } from '@/api/account';
+import { logout, getInfo, permmenu } from '@/api/account';
 import { generatorDynamicRouter } from '@/router/generator-router';
 import { resetRouter } from '@/router';
 
@@ -67,26 +67,25 @@ export const useUserStore = defineStore({
 
         console.log(xxx);
 
-        const { Token, entity } = await login(params);
+        const { Token } = await login(params);
         //console.log(ttt);
         //const { Token, entity } = await login(params);
         console.log('data');
         console.log(Token);
-        console.log(entity);
         console.log('data.Token');
         console.log(Token);
         this.setToken(Token);
-        return this.afterLogin(entity);
+        return this.afterLogin();
       } catch (error) {
         return Promise.reject(error);
       }
     },
     /** 登录成功之后, 获取用户信息以及生成权限路由 */
-    async afterLogin(userInfo) {
+    async afterLogin() {
       try {
-        const { menus, perms } = await permmenu();
+        const [{ entity }, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
 
-        this.sUserName = userInfo.sUserName;
+        this.sUserName = entity.sUserName;
         this.avatar = '';
         //const perms = [];
         // 生成路由
@@ -112,7 +111,7 @@ export const useUserStore = defineStore({
         console.log(menus);
         console.log(perms);
 
-        return { menus, perms, userInfo };
+        return { menus, perms, entity };
       } catch (error) {
         return Promise.reject(error);
         // return this.logout();

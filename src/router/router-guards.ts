@@ -18,72 +18,44 @@ export function createRouterGuards(router: Router, whiteNameList: WhiteNameList)
     NProgress.start(); // start progress bar
     const token = Storage.get(ACCESS_TOKEN_KEY, null);
 
-    console.log('createRouterGuards');
-
-    console.log('LOGIN_NAME');
-    console.log(LOGIN_NAME);
-    console.log('from');
-    console.log(from);
-    console.log('to');
-    console.log(to);
-
     if (token) {
       if (to.name === LOGIN_NAME) {
-        const hasRoute = router.hasRoute(defaultRoutePath!);
-        if (hasRoute) {
-          next({ path: defaultRoutePath });
-        }
+        next({ path: defaultRoutePath });
         NProgress.done();
       } else {
         const hasRoute = router.hasRoute(to.name!);
         if (userStore.menus.length === 0) {
           // 从后台获取菜单
-          //const [err] = await _to(userStore.afterLogin());
-          //if (err) {
-          // userStore.resetToken();
-          // return next({ name: LOGIN_NAME });
-          //}
+          const [err] = await _to(userStore.afterLogin());
+          if (err) {
+            userStore.resetToken();
+            return next({ name: LOGIN_NAME });
+          }
           if (!hasRoute) {
             // 请求带有 redirect 重定向时，登录自动重定向到该地址
             const redirect = decodeURIComponent((from.query.redirect || '') as string);
             if (to.path === redirect) {
-              console.log('redirect1');
-
               next({ ...to, replace: true });
             } else {
-              console.log('redirect2');
               // 跳转到目的路由
-              if (hasRoute) {
-                next({ ...to, replace: true });
-              } else {
-                console.log(router);
-                next();
-              }
+              next({ ...to, replace: true });
             }
           }
 
           if (whiteNameList.some((n) => n === to.name) || hasRoute) {
             // 在免登录名单，直接进入
-            console.log('whiteNameList1');
-
             next();
           }
         } else {
-          console.log('whiteNameList2');
-
           next();
         }
       }
     } else {
       // not login
       if (whiteNameList.some((n) => n === to.name)) {
-        console.log('whiteNameList3');
-
         // 在免登录名单，直接进入
         next();
       } else {
-        console.log('whiteNameList4');
-
         next({ name: LOGIN_NAME, query: { redirect: to.fullPath }, replace: true });
         NProgress.done(); // if current page is login will not trigger afterEach hook, so manually handle it
       }
@@ -99,11 +71,7 @@ export function createRouterGuards(router: Router, whiteNameList: WhiteNameList)
     const keepAliveStore = useKeepAliveStore();
     const token = Storage.get(ACCESS_TOKEN_KEY, null);
 
-    console.log(to);
-    console.log(from);
-
     if (isNavigationFailure(failure)) {
-      console.error('1--------failed navigation', failure);
       console.error('failed navigation', failure);
     }
     // 在这里设置需要缓存的组件名称

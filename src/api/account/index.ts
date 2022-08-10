@@ -17,10 +17,15 @@ export function updatePassword(data: any) {
 }
 
 export function getInfo() {
-  return request<API.AdminUserInfo>({
-    url: 'account/info',
-    method: 'get',
-  });
+  return request<BaseResponse<API.UserMst>>(
+    {
+      url: 'ADM04017C',
+      method: 'post',
+    },
+    {
+      isGetDataDirectly: false,
+    },
+  );
 }
 
 export function permmenu() {
