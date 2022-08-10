@@ -185,11 +185,7 @@
       icon: <QuestionCircleOutlined />,
       centered: true,
       onOk: async () => {
-        // 如果不是rootadmin，则退出登录
-        if (userStore.userInfo.phone !== '13553550634') {
-          // logout({})
-          await userStore.logout();
-        }
+        await userStore.logout();
         keepAliveStore.clear();
         // 移除标签页
         localStorage.clear();
