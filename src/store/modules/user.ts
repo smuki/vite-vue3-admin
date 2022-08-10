@@ -11,7 +11,7 @@ import { resetRouter } from '@/router';
 
 interface UserState {
   token: string;
-  name: string;
+  sUserName: string;
   avatar: string;
   // like [ 'sys:user:add', 'sys:user:update' ]
   perms: string[];
@@ -23,7 +23,7 @@ export const useUserStore = defineStore({
   id: 'user',
   state: (): UserState => ({
     token: Storage.get(ACCESS_TOKEN_KEY, null),
-    name: 'amdin',
+    sUserName: 'admin',
     avatar: '',
     perms: [],
     menus: [],
@@ -37,7 +37,7 @@ export const useUserStore = defineStore({
       return this.avatar;
     },
     getName(): string {
-      return this.name;
+      return this.sUserName;
     },
     getPerms(): string[] {
       return this.perms;
@@ -46,7 +46,7 @@ export const useUserStore = defineStore({
   actions: {
     /** 清空token及用户信息 */
     resetToken() {
-      this.avatar = this.token = this.name = '';
+      this.avatar = this.token = this.sUserName = '';
       this.perms = [];
       this.menus = [];
       this.userInfo = {};
@@ -86,22 +86,13 @@ export const useUserStore = defineStore({
       try {
         const { menus, perms } = await permmenu();
 
-        console.log(typeof menus);
-        console.log('-1generatorResult------------------------------------');
-        console.log('-2generatorResult------------------------------------');
-        console.log('-3generatorResult------------------------------------');
-        console.log('-4generatorResult------------------------------------');
-        console.log('-5generatorResult------------------------------------');
-        console.log('-6generatorResult------------------------------------');
-        console.log('-7generatorResult------------------------------------');
-        console.log(menus);
-
-        this.name = '';
+        this.sUserName = userInfo.sUserName;
         this.avatar = '';
         //const perms = [];
         // 生成路由
         const generatorResult = await generatorDynamicRouter(menus);
 
+        console.log(this.sUserName);
         console.log('-generatorResult------------------------------------');
         console.log('-generatorResult------------------------------------');
         console.log('-generatorResult------------------------------------');
@@ -113,6 +104,10 @@ export const useUserStore = defineStore({
 
         this.menus = generatorResult.menus.filter((item) => !item.meta?.hideInMenu);
         //!wsStore.client && wsStore.initSocket();
+
+        console.log('-menus------------------------------------');
+        console.log('-menus------------------------------------');
+        console.log('-menus------------------------------------');
 
         console.log(menus);
         console.log(perms);
