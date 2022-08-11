@@ -61,19 +61,8 @@ export const useUserStore = defineStore({
     /** 登录 */
     async login(params: API.LoginParams) {
       try {
-        console.log('###############await login(params)......');
-
-        const xxx = await login(params);
-
-        console.log(xxx);
-
         const { Token } = await login(params);
-        //console.log(ttt);
-        //const { Token, entity } = await login(params);
-        console.log('data');
-        console.log(Token);
-        console.log('data.Token');
-        console.log(Token);
+
         this.setToken(Token);
         return this.afterLogin();
       } catch (error) {
@@ -95,25 +84,8 @@ export const useUserStore = defineStore({
         // 生成路由
         const generatorResult = await generatorDynamicRouter(menus);
 
-        console.log(this.sUserName);
-        console.log('-generatorResult------------------------------------');
-        console.log('-generatorResult------------------------------------');
-        console.log('-generatorResult------------------------------------');
-        console.log('-generatorResult------------------------------------');
-        console.log('-generatorResult------------------------------------');
-        console.log('-generatorResult------------------------------------');
-
-        console.log(generatorResult);
-
         this.menus = generatorResult.menus.filter((item) => !item.meta?.hideInMenu);
         //!wsStore.client && wsStore.initSocket();
-
-        console.log('-menus------------------------------------');
-        console.log('-menus------------------------------------');
-        console.log('-menus------------------------------------');
-
-        console.log(menus);
-        console.log(perms);
 
         return { menus, perms, entity };
       } catch (error) {

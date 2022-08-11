@@ -21,7 +21,12 @@ export function filterAsyncRoute(
   lastNamePath: string[] = [],
 ): RouteRecordRaw[] {
   return routes
-    .filter((item) => item.nType !== 1 && !item.bHidden && item.sParent == parentRoute?.sKey)
+    .filter(
+      (item) =>
+        item.nType !== 2 &&
+        !item.bHidden &&
+        ((item.sParent == '-' && parentRoute == null) || item.sParent == parentRoute?.sKey),
+    )
     .map((item) => {
       const { sRouter, sPath, sName, sIcon, nSequency, bKeepAlive } = item;
       let fullPath = '';
@@ -33,6 +38,7 @@ export function filterAsyncRoute(
         fullPath = sRouter.startsWith(pathPrefix) ? fullPath : pathPrefix + fullPath;
         fullPath = [...new Set(uniqueSlash(fullPath).split('/'))].join('/');
       }
+
       let realRoutePath = sRouter;
       if (parentRoute) {
         if (fullPath.startsWith(parentRoute?.sRouter)) {
@@ -102,13 +108,16 @@ export const generatorDynamicRouter = (asyncMenus: API.SysMenus[]) => {
   try {
     // console.log('asyncMenus', asyncMenus);
     const routeList = filterAsyncRoute(asyncMenus);
+
     const layout = routes.find((item) => item.name == 'Layout')!;
+
     // console.log(routeList, '根据后端返回的权限路由生成');
     // 给公共路由添加namePath
     generatorNamePath(common);
     const menus = [...common, ...routeList, ...endRoutes];
     layout.children = menus;
     const removeRoute = router.addRoute(layout);
+
     // 获取所有没有包含children的路由，上面addRoute的时候，vue-router已经帮我们拍平了所有路由
     const filterRoutes = router
       .getRoutes()
