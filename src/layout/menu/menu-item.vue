@@ -43,7 +43,7 @@
   const menuChildren = computed(() => {
     return [...(props.menuInfo?.children || [])]
       .filter((n) => !n.meta?.hideInMenu)
-      .sort((a, b) => (a?.meta?.orderNum || 0) - (b?.meta?.orderNum || 0));
+      .sort((a, b) => (a?.meta?.nSequency || 0) - (b?.meta?.nSequency || 0));
   });
 
   const isShowSubMenu = computed(() => {

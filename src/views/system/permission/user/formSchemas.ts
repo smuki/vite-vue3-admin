@@ -18,7 +18,7 @@ export const deptSchemas: FormSchema<API.CreateDeptParams>[] = [
     rules: [{ required: true, type: 'number' }],
   },
   {
-    field: 'orderNum',
+    field: 'nSequency',
     component: 'InputNumber',
     label: '排序号',
     defaultValue: 255,

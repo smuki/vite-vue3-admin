@@ -67,7 +67,7 @@ export const baseColumns: TableColumnItem[] = [
     title: '排序号',
     width: 80,
     align: 'center',
-    dataIndex: 'orderNum',
+    dataIndex: 'nSequency',
   },
   {
     title: '更新时间',

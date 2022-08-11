@@ -47,7 +47,7 @@
   const menus = computed(() => {
     return [...userStore.menus]
       .filter((n) => !n.meta?.hideInMenu)
-      .sort((a, b) => (a?.meta?.orderNum || 0) - (b?.meta?.orderNum || 0));
+      .sort((a, b) => (a?.meta?.nSequency || 0) - (b?.meta?.nSequency || 0));
   });
   console.log('menus', menus.value);
   /** 侧边栏布局 */

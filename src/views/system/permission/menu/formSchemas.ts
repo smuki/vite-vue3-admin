@@ -91,7 +91,7 @@ export const menuSchemas: FormSchema<API.MenuAddParams>[] = [
     vIf: ({ formModel }) => formModel['type'] !== 2,
   },
   {
-    field: 'orderNum',
+    field: 'nSequency',
     component: 'InputNumber',
     label: '排序号',
     defaultValue: 255,

@@ -6,7 +6,7 @@ declare namespace API {
     id: number;
     parentId: number;
     name: string;
-    orderNum: number;
+    nSequency: number;
     keyPath?: number[];
   };
   /** 部门 */
@@ -29,7 +29,7 @@ declare namespace API {
   type UpdateDeptParams = {
     name: string;
     parentId: number | string;
-    orderNum: number;
+    nSequency: number;
     id: number | string;
   };
 
@@ -37,7 +37,7 @@ declare namespace API {
   type CreateDeptParams = {
     name: string;
     parentId: number;
-    orderNum: number;
+    nSequency: number;
   };
 
   /** 管理员部门转移 */
@@ -54,7 +54,7 @@ declare namespace API {
       id: number;
       parentId: number;
       name: 'string';
-      orderNum: number;
+      nSequency: number;
     };
     parentDepartment: {
       createTime: string;
@@ -62,7 +62,7 @@ declare namespace API {
       id: number;
       parentId: number;
       name: 'string';
-      orderNum: number;
+      nSequency: number;
     };
   };
 }

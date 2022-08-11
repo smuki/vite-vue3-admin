@@ -39,7 +39,7 @@ declare module 'vue-router' {
     /** 设置当前路由高亮的菜单项，值为route fullPath或route name,一般用于详情页 */
     activeMenu?: string;
     /** 菜单排序号 */
-    orderNum?: number;
+    nSequency?: number;
     isLink?: boolean;
   }
 }

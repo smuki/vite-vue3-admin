@@ -25,7 +25,7 @@ declare namespace API {
     /** 当前菜单类型 0: 目录 | 1: 菜单 | 2: 权限 */
     type: 0 | 1 | 2;
     icon: string;
-    orderNum: number;
+    nSequency: number;
     viewPath: string;
     keepalive: boolean;
     isShow: boolean;

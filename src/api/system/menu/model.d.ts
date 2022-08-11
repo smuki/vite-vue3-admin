@@ -9,7 +9,7 @@ declare namespace API {
     perms: string;
     type: number;
     icon: string;
-    orderNum: number;
+    nSequency: number;
     viewPath: string;
     keepalive: boolean;
     isShow: boolean;
@@ -24,7 +24,7 @@ declare namespace API {
     type: number;
     parentId: number;
     name: string;
-    orderNum: number;
+    nSequency: number;
     router: string;
     isShow: boolean;
     keepalive: boolean;
@@ -50,7 +50,7 @@ declare namespace API {
       perms: string;
       type: number;
       icon: string;
-      orderNum: number;
+      nSequency: number;
       viewPath: string;
       keepalive: boolean;
       isShow: boolean;
@@ -65,7 +65,7 @@ declare namespace API {
       perms: string;
       type: number;
       icon: string;
-      orderNum: number;
+      nSequency: number;
       viewPath: string;
       keepalive: boolean;
       isShow: boolean;

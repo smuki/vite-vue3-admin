@@ -36,25 +36,33 @@
       </Tooltip>
       <FullScreen v-if="false" />
       <LocalePicker v-if="false" />
-      <Dropdown placement="bottomRight">
-        <Avatar :src="userInfo.headImg" :alt="userInfo.sUserName">{{ userInfo.sUserName }}</Avatar>
-        <template #overlay>
-          <Menu>
-            <Menu.Item @click="$router.push({ name: 'account-about' })">
-              {{ $t('routes.account.about') }}
-            </Menu.Item>
-            <Menu.Item @click="$router.push({ name: 'account-settings' })">
-              {{ $t('routes.account.settings') }}
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item>
-              <div @click.prevent="doLogout">
-                <poweroff-outlined /> {{ $t('layout.header.dropdownItemLoginOut') }}
-              </div>
-            </Menu.Item>
-          </Menu>
-        </template>
-      </Dropdown>
+
+      <div>
+        <span>
+          <Dropdown placement="bottomRight">
+            <Avatar :src="userInfo.headImg" :alt="userInfo.sUserName">{{
+              userInfo.sUserName
+            }}</Avatar>
+            <template #overlay>
+              <Menu>
+                <Menu.Item @click="$router.push({ name: 'account-about' })">
+                  {{ $t('routes.account.about') }}
+                </Menu.Item>
+                <Menu.Item @click="$router.push({ name: 'account-settings' })">
+                  {{ $t('routes.account.settings') }}
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item>
+                  <div @click.prevent="doLogout">
+                    <poweroff-outlined /> {{ $t('layout.header.dropdownItemLoginOut') }}
+                  </div>
+                </Menu.Item>
+              </Menu>
+            </template>
+          </Dropdown>
+        </span>
+        <span>袁锦原</span>
+      </div>
       <ProjectSetting />
     </Space>
   </Layout.Header>
