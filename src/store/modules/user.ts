@@ -85,6 +85,10 @@ export const useUserStore = defineStore({
       try {
         const [{ entity }, { perms, menus }] = await Promise.all([getInfo(), permmenu()]);
 
+        this.perms = perms;
+        //this.avatar = userInfo.headImg;
+        this.userInfo = entity;
+
         this.sUserName = entity.sUserName;
         this.avatar = '';
         //const perms = [];

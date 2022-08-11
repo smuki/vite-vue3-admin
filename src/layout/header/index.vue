@@ -35,35 +35,33 @@
         <LockOutlined @click="lockscreenStore.setLock(true)" />
       </Tooltip>
       <FullScreen v-if="false" />
+
+      <Dropdown placement="bottomRight">
+        <span>
+          <user-outlined />
+          <span> {{ userInfo.sUserName }} </span>
+        </span>
+
+        <template #overlay>
+          <Menu>
+            <Menu.Item @click="$router.push({ name: 'account-about' })">
+              <info-circle-outlined /> {{ $t('routes.account.about') }}
+            </Menu.Item>
+            <Menu.Item @click="$router.push({ name: 'account-settings' })">
+              <user-outlined /> {{ $t('routes.account.settings') }}
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item>
+              <div @click.prevent="doLogout">
+                <poweroff-outlined /> {{ $t('layout.header.dropdownItemLoginOut') }}
+              </div>
+            </Menu.Item>
+          </Menu>
+        </template>
+      </Dropdown>
       <LocalePicker v-if="false" />
 
-      <div>
-        <span>
-          <Dropdown placement="bottomRight">
-            <Avatar :src="userInfo.headImg" :alt="userInfo.sUserName">{{
-              userInfo.sUserName
-            }}</Avatar>
-            <template #overlay>
-              <Menu>
-                <Menu.Item @click="$router.push({ name: 'account-about' })">
-                  {{ $t('routes.account.about') }}
-                </Menu.Item>
-                <Menu.Item @click="$router.push({ name: 'account-settings' })">
-                  {{ $t('routes.account.settings') }}
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item>
-                  <div @click.prevent="doLogout">
-                    <poweroff-outlined /> {{ $t('layout.header.dropdownItemLoginOut') }}
-                  </div>
-                </Menu.Item>
-              </Menu>
-            </template>
-          </Dropdown>
-        </span>
-        <span>袁锦原</span>
-      </div>
-      <ProjectSetting />
+      <ProjectSetting v-if="false" />
     </Space>
   </Layout.Header>
 </template>
@@ -77,6 +75,8 @@
     MenuUnfoldOutlined,
     PoweroffOutlined,
     LockOutlined,
+    UserOutlined,
+    InfoCircleOutlined,
   } from '@ant-design/icons-vue';
   import {
     Layout,
@@ -86,7 +86,7 @@
     Menu,
     Space,
     Breadcrumb,
-    Avatar,
+    //Avatar,
     Tooltip,
     type MenuTheme,
   } from 'ant-design-vue';
